@@ -1,6 +1,5 @@
 # Boundary HAProxy Plugin
 
-
 Collects statistics from an HAProxy instance. To get statistics from HAProxy instance, you need to instruct HAProxy where to host the statistics. Either a filesocket or webpage can be specified.
 
 ### Prerequisites
@@ -9,10 +8,10 @@ Collects statistics from an HAProxy instance. To get statistics from HAProxy ins
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |    v    |    v    |  v   |
 
-#### Boundary Meter Versions V4.0 Or Later
+#### Boundary Meter versions v4.2 or later
 
-- To install new meter go to Settings->Installation or [see instructons|https://help.boundary.com/hc/en-us/sections/200634331-Installation]. 
-- To upgrade the meter to the latest version - [see instructons|https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter].
+- To install new meter go to Settings->Installation or [see instructons](https://help.boundary.com/hc/en-us/sections/200634331-Installation).
+- To upgrade the meter to the latest version - [see instructons](https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter).
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
@@ -28,17 +27,17 @@ Collects statistics from an HAProxy instance. To get statistics from HAProxy ins
 
 ### Plugin Setup
 
-##### For Boundary Meter V4.0
+#### For Boundary Meter v4.2
 
 The plugin requires a web page to collect HAProxy statistics. The sections below describe configuration for each.
 
-##### For Boundary Meter less than V4.0
+#### For Boundary Meter earlier than v4.2
 
 The plugin requires either a file socket or a web page to collect HAProxy statistics. The sections below describe configuration for each.
 
 #### Using a File Socket
 
-##### For Boundary Meter less than V4.0
+##### For Boundary Meter earlier than v4.2
 
 The following snippet of configuration will host the statistics on a file socket.
 * the `mode` parameter sets the mode of the file socket.  If the relay is running as the same user as haproxy, `mode 777` can be omitted'
@@ -103,3 +102,12 @@ Tracks the following metrics for [haproxy](http://www.haproxy.org)
 |Haproxy 4XX Resp            |the number of 4XX HTTP responses                    |
 |Haproxy 5XX Resp            |the  number of 5XX HTTP responses                   |
 |Haproxy Other Resp          |http responses with other codes (protocol error)    |
+
+### Dashboards
+
+- HAProxy Http Overview
+- HAProxy Networks Overview
+
+### References
+
+None
