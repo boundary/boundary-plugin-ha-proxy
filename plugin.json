@@ -86,11 +86,11 @@
       }
     },
     {
-      "title": "Poll Seconds",
-      "name": "pollSeconds",
-      "description": "How often should the plugin poll the Haproxy endpoint",
-      "type" : "string",
-      "default" : 1
+      "title": "Poll Interval (ms)",
+      "name": "pollInterval",
+      "description": "How often should the plugin poll (in milliseconds) the Haproxy endpoint",
+      "type" : "integer",
+      "default" : 1000 
     }
   ]
 }
