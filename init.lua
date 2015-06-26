@@ -9,6 +9,8 @@ local parseCSV = framework.string.parseCSV
 local table = require('table')
 local indexOf = framework.table.indexOf 
 local pack = framework.util.pack
+local notEmpty = framework.string.notEmpty
+local isHttpSuccess = framework.util.isHttpSuccess
 
 local params = framework.params
 params.pollInterval = notEmpty(params.pollSeconds, notEmpty(params.pollInterval, 1000))
@@ -74,7 +76,11 @@ local ds = WebRequestDataSource:new(options)
 ]]
 
 local plugin = Plugin:new(params, ds)
-function plugin:onParseValues(data)
+function plugin:onParseValues(data, extra)
+  if not isHttpSuccess(extra.status_code) then
+    self:emitEvent('error', ('Http response status code %d instead of OK. Please check your configuration.'):format(extra.status_code))
+    return
+  end
   local result = {} 
   local parsed = parseCSV(data, ',', '#', 1)
   for i, v in ipairs(parsed) do

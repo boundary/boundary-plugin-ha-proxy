@@ -1,8 +1,8 @@
 {
   "name" : "Boundary Plugin HAProxy",
-  "version" : "0.9.0",
+  "version" : "0.9.1",
   "meterVersionRequired" : "4.2.0-611",
-  "os" : [ "Linux", "Windows", "SmartOS", "OS X" ], 
+  "unsupportedPlatforms" : [ ],
   "tags" : "haproxy",
   "description" : "Displays important haproxy metrics",
   "icon" : "icon.png",
@@ -86,11 +86,11 @@
       }
     },
     {
-      "title": "Poll Seconds",
-      "name": "pollSeconds",
-      "description": "How often should the plugin poll the Haproxy endpoint",
-      "type" : "string",
-      "default" : 1
+      "title": "Poll Interval (ms)",
+      "name": "pollInterval",
+      "description": "How often should the plugin poll (in milliseconds) the Haproxy endpoint",
+      "type" : "integer",
+      "default" : 1000 
     }
   ]
 }
