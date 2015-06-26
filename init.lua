@@ -9,6 +9,7 @@ local parseCSV = framework.string.parseCSV
 local table = require('table')
 local indexOf = framework.table.indexOf 
 local pack = framework.util.pack
+local notEmpty = framework.string.notEmpty
 
 local params = framework.params
 params.pollInterval = notEmpty(params.pollSeconds, notEmpty(params.pollInterval, 1000))
