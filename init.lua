@@ -116,9 +116,9 @@ function plugin:onParseValues(data, extra)
         metric('HAPROXY_REQUESTS_QUEUED', v.qcur, nil, alias) -- current queued requests
         metric('HAPROXY_REQUESTS_QUEUE_LIMIT', queue_usage, nil, alias) -- queue_usage percentage
 
-        metric(result, pack('HAPROXY_REQUESTS_HANDLED', acc:accumulate('req_tot', v.req_tot or 0), nil, alias))
-        metric(result, pack('HAPROXY_REQUESTS_ABORTED_BY_CLIENT', acc:accumulate('cli_abrt', v.cli_abrt or 0), nil, alias))
-        metric(result, pack('HAPROXY_REQUESTS_ABORTED_BY_SERVER', acc:accumulate('srv_abrt', v.srv_abrt or 0), nil, alias))
+        metric('HAPROXY_REQUESTS_HANDLED', acc:accumulate('req_tot', v.req_tot or 0), nil, alias)
+        metric('HAPROXY_REQUESTS_ABORTED_BY_CLIENT', acc:accumulate('cli_abrt', v.cli_abrt or 0), nil, alias)
+        metric('HAPROXY_REQUESTS_ABORTED_BY_SERVER', acc:accumulate('srv_abrt', v.srv_abrt or 0), nil, alias)
 
         metric('HAPROXY_SESSIONS', v.scur, nil, alias)
         metric('HAPROXY_SESSION_LIMIT', sessions_usage, nil, alias)  -- session_usage is a percentage
