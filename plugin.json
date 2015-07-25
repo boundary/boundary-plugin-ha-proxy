@@ -49,7 +49,8 @@
       "name" : "url",
       "description" : "The URL endpoint of where the haproxy statistics are hosted.  Socket or URL is required",
       "type" : "string",
-      "default" : "http://localhost/stats;csv"
+      "default" : "http://localhost/stats;csv",
+      "required" : true
     },
     {
       "title" : "Username",
