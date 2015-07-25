@@ -45,12 +45,6 @@
 
   "paramSchema" : [
     {
-      "title" : "Source",
-      "name" : "source",
-      "description" : "The Source to display in the legend for the haproxy data.  It will default to the hostname of the server",
-      "type" : "string"
-    },
-    {
       "title" : "Socket path",
       "name" : "socketPath",
       "description" : "The Haproxy statistics Socket path.  Socket or URL is required",
@@ -91,6 +85,12 @@
       "description": "How often should the plugin poll (in milliseconds) the Haproxy endpoint",
       "type" : "integer",
       "default" : 1000 
-    }
+    },
+    {
+      "title" : "Source",
+      "name" : "source",
+      "description" : "The Source to display in the legend for the haproxy data.  It will default to the hostname of the server",
+      "type" : "string"
+    },
   ]
 }
