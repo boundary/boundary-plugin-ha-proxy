@@ -65,7 +65,7 @@
       "type" : "password"
     },
     {
-      "title": "Filter",
+      "title": "Proxies Filter",
       "name": "proxies",
       "description": "Which Server groups would you like to view",
       "type" : "array",
