@@ -1,3 +1,17 @@
+-- Copyright 2015 Boundary, Inc.
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+--
+--    http://www.apache.org/licenses/LICENSE-2.0
+--
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+
 local framework = require('framework')
 local Plugin = framework.Plugin
 local WebRequestDataSource = framework.WebRequestDataSource
@@ -6,9 +20,8 @@ local Cache = framework.Cache
 local url = require('url')
 local auth = framework.util.auth 
 local parseCSV = framework.string.parseCSV
-local table = require('table')
 local indexOf = framework.table.indexOf 
-local pack = framework.util.pack
+local ipack = framework.util.ipack
 local notEmpty = framework.string.notEmpty
 local isHttpSuccess = framework.util.isHttpSuccess
 
@@ -82,6 +95,9 @@ function plugin:onParseValues(data, extra)
     return
   end
   local result = {} 
+  local metric = function (...)
+    ipack(result, ...)
+  end
   local parsed = parseCSV(data, ',', '#', 1)
   for i, v in ipairs(parsed) do
     if v.svname == 'FRONTEND' or v.svname == 'BACKEND' then
@@ -96,30 +112,30 @@ function plugin:onParseValues(data, extra)
         local errors       = acc:accumulate('errors', v.ereq + v.econ + v.eresp)
         local downtime     = acc:accumulate('downtime', v.downtime) * 1000 -- downtime in milliseconds
 
-        table.insert(result, pack('HAPROXY_REQUESTS_QUEUED', v.qcur, nil, alias)) -- current queued requests
-        table.insert(result, pack('HAPROXY_REQUESTS_QUEUE_LIMIT', queue_usage, nil, alias)) -- queue_usage percentage
+        metric('HAPROXY_REQUESTS_QUEUED', v.qcur, nil, alias) -- current queued requests
+        metric('HAPROXY_REQUESTS_QUEUE_LIMIT', queue_usage, nil, alias) -- queue_usage percentage
 
-        table.insert(result, pack('HAPROXY_REQUESTS_HANDLED', acc:accumulate('req_tot', v.req_tot or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_REQUESTS_ABORTED_BY_CLIENT', acc:accumulate('cli_abrt', v.cli_abrt or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_REQUESTS_ABORTED_BY_SERVER', acc:accumulate('srv_abrt', v.srv_abrt or 0), nil, alias))
+        metric('HAPROXY_REQUESTS_HANDLED', acc('req_tot', v.req_tot or 0), nil, alias)
+        metric('HAPROXY_REQUESTS_ABORTED_BY_CLIENT', acc('cli_abrt', v.cli_abrt or 0), nil, alias)
+        metric('HAPROXY_REQUESTS_ABORTED_BY_SERVER', acc('srv_abrt', v.srv_abrt or 0), nil, alias)
 
-        table.insert(result, pack('HAPROXY_SESSIONS', v.scur, nil, alias))
-        table.insert(result, pack('HAPROXY_SESSION_LIMIT', sessions_usage, nil, alias))  -- session_usage is a percentage
+        metric('HAPROXY_SESSIONS', v.scur, nil, alias)
+        metric('HAPROXY_SESSION_LIMIT', sessions_usage, nil, alias)  -- session_usage is a percentage
 
-        table.insert(result, pack('HAPROXY_BYTES_IN', acc:accumulate('bin', v.bin), nil, alias))
-        table.insert(result, pack('HAPROXY_BYTES_OUT', acc:accumulate('bout', v.bout), nil, alias))
+        metric('HAPROXY_BYTES_IN', acc('bin', v.bin), nil, alias)
+        metric('HAPROXY_BYTES_OUT', acc('bout', v.bout), nil, alias)
 
-        table.insert(result, pack('HAPROXY_WARNINGS', warnings, nil, alias))
-        table.insert(result, pack('HAPROXY_ERRORS', errors, nil, alias))
-        table.insert(result, pack('HAPROXY_FAILED_HEALTH_CHECKS', acc:accumulate('chkfail', v.chkfail), nil, alias))
-        table.insert(result, pack('HAPROXY_DOWNTIME_SECONDS', downtime, nil, alias))
+        metric('HAPROXY_WARNINGS', warnings, nil, alias)
+        metric('HAPROXY_ERRORS', errors, nil, alias)
+        metric('HAPROXY_FAILED_HEALTH_CHECKS', acc('chkfail', v.chkfail), nil, alias)
+        metric('HAPROXY_DOWNTIME_SECONDS', downtime, nil, alias)
 
-        table.insert(result, pack('HAPROXY_1XX_RESPONSES', acc:accumulate('hrsp_1xx', v.hrsp_1xx or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_2XX_RESPONSES', acc:accumulate('hrsp_2xx', v.hrsp_2xx or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_3XX_RESPONSES', acc:accumulate('hrsp_3xx', v.hrsp_3xx or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_4XX_RESPONSES', acc:accumulate('hrsp_4xx', v.hrsp_4xx or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_5XX_RESPONSES', acc:accumulate('hrsp_5xx', v.hrsp_5xx or 0), nil, alias))
-        table.insert(result, pack('HAPROXY_OTHER_RESPONSES', acc:accumulate('hrsp_other', v.hrsp_other or 0), nil, alias))
+        metric('HAPROXY_1XX_RESPONSES', acc('hrsp_1xx', v.hrsp_1xx or 0), nil, alias)
+        metric('HAPROXY_2XX_RESPONSES', acc('hrsp_2xx', v.hrsp_2xx or 0), nil, alias)
+        metric('HAPROXY_3XX_RESPONSES', acc('hrsp_3xx', v.hrsp_3xx or 0), nil, alias)
+        metric('HAPROXY_4XX_RESPONSES', acc('hrsp_4xx', v.hrsp_4xx or 0), nil, alias)
+        metric('HAPROXY_5XX_RESPONSES', acc('hrsp_5xx', v.hrsp_5xx or 0), nil, alias)
+        metric('HAPROXY_OTHER_RESPONSES', acc('hrsp_other', v.hrsp_other or 0), nil, alias)
       end
     end
   end
@@ -127,3 +143,4 @@ function plugin:onParseValues(data, extra)
 end
 
 plugin:run()
+

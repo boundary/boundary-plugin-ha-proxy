@@ -45,24 +45,12 @@
 
   "paramSchema" : [
     {
-      "title" : "Source",
-      "name" : "source",
-      "description" : "The Source to display in the legend for the haproxy data.  It will default to the hostname of the server",
-      "type" : "string"
-    },
-    {
-      "title" : "Socket path",
-      "name" : "socketPath",
-      "description" : "The Haproxy statistics Socket path.  Socket or URL is required",
-      "type" : "string",
-      "default" : "/tmp/haproxy"
-    },
-    {
       "title" : "Statistics URL",
       "name" : "url",
       "description" : "The URL endpoint of where the haproxy statistics are hosted.  Socket or URL is required",
       "type" : "string",
-      "default" : "http://localhost/stats;csv"
+      "default" : "http://127.0.0.1/stats;csv",
+      "required" : true
     },
     {
       "title" : "Username",
@@ -77,7 +65,7 @@
       "type" : "password"
     },
     {
-      "title": "Filter",
+      "title": "Proxies Filter",
       "name": "proxies",
       "description": "Which Server groups would you like to view",
       "type" : "array",
@@ -91,6 +79,12 @@
       "description": "How often should the plugin poll (in milliseconds) the Haproxy endpoint",
       "type" : "integer",
       "default" : 1000 
-    }
+    },
+    {
+      "title" : "Source",
+      "name" : "source",
+      "description" : "The Source to display in the legend for the haproxy data.  It will default to the hostname of the server",
+      "type" : "string"
+    },
   ]
 }
