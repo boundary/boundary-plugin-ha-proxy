@@ -1,8 +1,8 @@
 {
-	"url" : "http://localhost/stats",
+	"url" : " http://localhost/",
 	"proxies" : ["http-in","https-in", "third-http"],
 	"username": "username",
 	"password": "password",
-	"pollInterval": 5
+	"pollInterval": 2000 
 
 }
