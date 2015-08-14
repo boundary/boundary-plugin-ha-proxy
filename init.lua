@@ -18,15 +18,18 @@ local WebRequestDataSource = framework.WebRequestDataSource
 local Accumulator = framework.Accumulator
 local Cache = framework.Cache
 local url = require('url')
-local auth = framework.util.auth 
+local auth = framework.util.auth
 local parseCSV = framework.string.parseCSV
-local indexOf = framework.table.indexOf 
+local indexOf = framework.table.indexOf
 local ipack = framework.util.ipack
 local notEmpty = framework.string.notEmpty
 local isHttpSuccess = framework.util.isHttpSuccess
 
 local params = framework.params
-params.pollInterval = notEmpty(params.pollSeconds, notEmpty(params.pollInterval, 1000))
+params.pollInterval =
+    tonumber(params.pollSeconds) and tonumber(params.pollSeconds) * 1000
+    or tonumber(params.pollInterval)
+    or 1000
 
 local options = url.parse(params.url .. ';csv')
 options.auth = auth(params.username, params.password)
@@ -34,7 +37,7 @@ options.wait_for_end = false -- Check behaviour of HAProxy based on different ve
 local cache = Cache:new(function () return Accumulator:new() end)
 local ds = WebRequestDataSource:new(options)
 
---[[  
+--[[
     'pxname',           -- proxy name (ex. http-in)
     'svname',           -- service name (FRONTEND or BACKEND_
     'qcur',             -- current queued requests (ex 0)
@@ -94,7 +97,7 @@ function plugin:onParseValues(data, extra)
     self:emitEvent('error', ('Http response status code %d instead of OK. Please check your configuration.'):format(extra.status_code))
     return
   end
-  local result = {} 
+  local result = {}
   local metric = function (...)
     ipack(result, ...)
   end
@@ -104,7 +107,7 @@ function plugin:onParseValues(data, extra)
       if not params.proxies or #params.proxies == 0 or (#params.proxies == 1 and params.proxies[1] == "") or indexOf(params.proxies, v.pxname) then
         local name = v.pxname
         local alias = self.source .. '-' .. name
-        local acc = cache:get(alias) 
+        local acc = cache:get(alias)
 
         local queue_usage   = (v.qcur and not v.qlimit == "") and (v.qcur / v.qlimit) or 0.0 -- Percentage of queue usage.
         local sessions_usage = (v.scur and v.slim) and (v.scur / v.slim) or 0.0 -- Percentage of session usage.
