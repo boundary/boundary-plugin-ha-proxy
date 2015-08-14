@@ -3,6 +3,5 @@
 	"proxies" : ["http-in","https-in", "third-http"],
 	"username": "username",
 	"password": "password",
-	"pollInterval": 2000 
-
+	"pollInterval": 2000
 }
