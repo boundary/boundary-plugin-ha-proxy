@@ -1,4 +1,4 @@
-# Boundary HAProxy Plugin
+# TrueSight Pulse HAProxy Plugin
 
 Collects statistics from an HAProxy instance. To get statistics from HAProxy instance, you need to instruct HAProxy where to host the statistics. Either a filesocket or webpage can be specified.
 
@@ -8,16 +8,17 @@ Collects statistics from an HAProxy instance. To get statistics from HAProxy ins
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |    v    |    v    |  v   |
 
-#### Boundary Meter versions v4.2 or later
+#### TrueSight Meter versions v4.2 or later
 
-- To install new meter go to Settings->Installation or [see instructions](https://help.boundary.com/hc/en-us/sections/200634331-Installation).
-- To upgrade the meter to the latest version - [see instructions](https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter).
+- To install new meter go to Settings->Installation or [see instructions](https://help.truesight.bmc.com/hc/en-us/sections/200634331-Installation).
+- To upgrade the meter to the latest version - [see instructions](https://help.truesight.bmc.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter). 
+
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
 | Required |         |        |      |
 
-#### For Boundary Meter less than V4.0
+#### For TrueSight Meter less than V4.0
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
@@ -27,17 +28,17 @@ Collects statistics from an HAProxy instance. To get statistics from HAProxy ins
 
 ### Plugin Setup
 
-#### For Boundary Meter v4.2
+#### For TrueSight Meter v4.2
 
 The plugin requires a web page to collect HAProxy statistics. The sections below describe configuration for each.
 
-#### For Boundary Meter earlier than v4.2
+#### For TrueSight Meter earlier than v4.2
 
 The plugin requires either a file socket or a web page to collect HAProxy statistics. The sections below describe configuration for each.
 
 #### Using a File Socket
 
-##### For Boundary Meter earlier than v4.2
+##### For TrueSight Meter earlier than v4.2
 
 The following snippet of configuration will host the statistics on a file socket.
 * the `mode` parameter sets the mode of the file socket.  If the relay is running as the same user as haproxy, `mode 777` can be omitted'
@@ -48,7 +49,7 @@ The following snippet of configuration will host the statistics on a file socket
 
 #### Using a Web Page
 
-##### For all supported Boundary Meter versions
+##### For all supported TrueSight Meter versions
 
 The following snippet of configuration will tell haproxy to host a webpage the plugin will scrape (you can view the webpage as well)
 * `stats enable` tell haproxy to enable the webpage

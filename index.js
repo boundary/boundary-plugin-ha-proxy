@@ -1,6 +1,12 @@
 var _net = require('net');
 var _os = require('os');
-var _param = require('./param.json');
+
+var _param  = process.env.TSP_PLUGIN_PARAMS;
+if (_param == null || _param == ''){
+  _param = require('./param.json');
+}else{
+  _param = parseJSON(_param); 
+} 
 var _request = require('request');
 var _tools = require('graphdat-plugin-tools');
 var _url = require('url');
