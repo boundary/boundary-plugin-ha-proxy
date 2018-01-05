@@ -2,7 +2,7 @@
 	"name": "graphdat-haproxy-plugin",
 	"version": "0.0.1",
 	"private": false,
-	"description": "Haproxy plugin for Graphat",
+	"description": "Haproxy plugin for TrueSight Meter",
 	"main": "index.js",
 	"devDependencies": {},
 	"dependencies": {
